@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.42.24
 	github.com/cenkalti/backoff v0.0.0-20170921171023-61ba96c4d100
 	github.com/dgraph-io/badger v1.6.0
+	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dimfeld/httppath v0.0.0-20170720192232-ee938bf73598 // indirect
 	github.com/dimfeld/httptreemux v4.0.1+incompatible // indirect
@@ -14,7 +15,7 @@ require (
 	github.com/google/gxui v0.0.0-20151028112939-f85e0a97b3a4 // indirect
 	github.com/goreleaser/goreleaser v1.2.5
 	github.com/hashicorp/golang-lru v0.5.4
-	github.com/klauspost/compress v1.14.2
+	github.com/klauspost/compress v1.15.15
 	github.com/klauspost/readahead v1.3.1
 	github.com/klauspost/shutdown2 v1.1.0
 	github.com/manveru/faker v0.0.0-20160419072036-717f7cf83fb7 // indirect

@@ -17,12 +17,15 @@ import (
 	"github.com/Vivino/rankdb"
 	"github.com/Vivino/rankdb/blobstore"
 	"github.com/Vivino/rankdb/blobstore/aerostore"
+	"github.com/Vivino/rankdb/blobstore/badger3store"
 	"github.com/Vivino/rankdb/blobstore/badgerstore"
 	"github.com/Vivino/rankdb/blobstore/boltstore"
 	"github.com/Vivino/rankdb/blobstore/memstore"
 	"github.com/Vivino/rankdb/log"
 	"github.com/Vivino/rankdb/log/loggoa"
 	"github.com/dgraph-io/badger"
+	badger3 "github.com/dgraph-io/badger/v3"
+	options3 "github.com/dgraph-io/badger/v3/options"
 	"github.com/goadesign/goa"
 	lru "github.com/hashicorp/golang-lru"
 	shutdown "github.com/klauspost/shutdown2"
@@ -285,6 +288,17 @@ func newBlobstore(ctx context.Context, s string) (store blobstore.Store, closers
 		opts = opts.WithSyncWrites(config.Badger.NoSync).WithTruncate(config.Badger.NoSync)
 		opts = opts.WithLogger(badgerstore.BadgerLogger(ctx))
 		bs, err := badgerstore.New(opts)
+		if err != nil {
+			return nil, nil, err
+		}
+		store = bs
+		closers = append(closers, func() { bs.Close() })
+	case "Badger3":
+		opts := badger3.DefaultOptions(config.Badger.Path)
+		opts = opts.WithSyncWrites(config.Badger.NoSync)
+		opts = opts.WithCompression(options3.ZSTD)
+		opts = opts.WithLogger(badger3store.BadgerLogger(ctx))
+		bs, err := badger3store.New(opts)
 		if err != nil {
 			return nil, nil, err
 		}

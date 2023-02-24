@@ -7,7 +7,7 @@ ListenAddress = ":8080"
 MasterSet = "rankdb"
 
 # Storage backend to use.
-# Currently available are: "Memory", "Badger", "Aerospike" and "BoltDB".
+# Currently available are: "Memory", "Badger", "Badger3", "Aerospike" and "BoltDB".
 Storage = "Badger"
 
 # CacheEntries are the number of list segments to keep in memory.
