@@ -285,7 +285,7 @@ func newBlobstore(ctx context.Context, s string) (store blobstore.Store, closers
 	switch s {
 	case "Badger":
 		opts := badger.DefaultOptions(config.Badger.Path)
-		opts = opts.WithSyncWrites(config.Badger.NoSync).WithTruncate(config.Badger.NoSync)
+		opts = opts.WithSyncWrites(!config.Badger.NoSync).WithTruncate(config.Badger.NoSync)
 		opts = opts.WithLogger(badgerstore.BadgerLogger(ctx))
 		bs, err := badgerstore.New(opts)
 		if err != nil {
@@ -295,7 +295,7 @@ func newBlobstore(ctx context.Context, s string) (store blobstore.Store, closers
 		closers = append(closers, func() { bs.Close() })
 	case "Badger3":
 		opts := badger3.DefaultOptions(config.Badger.Path)
-		opts = opts.WithSyncWrites(config.Badger.NoSync)
+		opts = opts.WithSyncWrites(!config.Badger.NoSync)
 		opts = opts.WithCompression(options3.ZSTD)
 		opts = opts.WithLogger(badger3store.BadgerLogger(ctx))
 		bs, err := badger3store.New(opts)
